@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/gh/pocketbase/js-sdk/dist/pocketbase.umd.js"></script>
+	<title>Leaderboard</title>
+	<style>
+		body {
+			background-color: #f0f8ff; /* Light blue background */
+			font-family: Arial, sans-serif;
+		}
+		table {
+			margin: 20px auto;
+			border-collapse: collapse;
+			width: 50%;
+			background-color: #fff; /* White table background */
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for table */
+		}
+		th, td {
+			text-align: left;
+			padding: 12px;
+		}
+		th {
+			background-color: #23395d; /* Blue header background */
+			color: #fff; /* White header text */
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2; /* Light gray background for even rows */
+		}
+		tr:hover {
+			background-color: #ddd; /* Darker gray background on hover */
+		}
+        .button-container {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+        .add-container {
+            /* Display on top right */
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+		.button {
+            border-radius:5px;
+			background-color: #0074D9;
+			color: white;
+			font-size: 16px;
+			padding: 10px 20px;
+			border: none;
+			cursor: pointer;
+			margin-right: 10px;
+		}
+		.active {
+			background-color: #004b8c;
+		}
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.modal form input,
+.modal form select {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modal form input[type="submit"] {
+    background-color: #0074D9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal form input[type="submit"]:hover {
+    background-color: #005ea3;
+}
+	</style>
+</head>
+<body>
+    <div class="button-container">
+		<button class="button active" id="adults-button">Adults</button>
+		<button class="button" id="kids-button">Kids</button>
+	</div>
+    <!-- A simple button on the right that triggers a modal -->
+    <div class="add-container">
+        <button class="button" id="add-button">+ Add score</button>
+    </div>
+    <!-- A small form that is hidden until the add score button is pressed. It contains three fields, A team name text field, a remaining time field up to 600 seconds, and a select which has the options kids and adults. -->
+    <div class="modal" id="modal">
+        <form id="add-score-form">
+            <label for="team-name">Team name</label>
+            <input type="text" id="team-name" name="team-name" required>
+            <label for="time-left">Time left</label>
+            <input type="number" id="time-left" name="time-left" min="0" max="600" required>
+            <label for="team-type">Route taken</label>
+            <select id="team-type" name="team-type" required>
+                <option value="adult">Adults</option>
+                <option value="kid">Kids</option>
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+	<table id="leaderboard">
+		<thead>
+			<tr>
+				<th>Rank</th>
+				<th>Name</th>
+				<th>Remaining Time</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	<script type="module">
+		const pb = new PocketBase('https://leaderboard-pse.pockethost.io');
+		const tableBody = document.querySelector('#leaderboard tbody');
+		pb.collection('leaderboard_adults').getList(1, 10).then(resultList => {
+			resultList.items.forEach((item, index) => {
+				const row = document.createElement('tr');
+				const rankCell = document.createElement('td');
+				rankCell.textContent = index + 1;
+				const nameCell = document.createElement('td');
+				nameCell.textContent = item.id;
+				const scoreCell = document.createElement('td');
+				scoreCell.textContent = item.time_left;
+				row.appendChild(rankCell);
+				row.appendChild(nameCell);
+				row.appendChild(scoreCell);
+				tableBody.appendChild(row);
+			});
+		});
+        // Add an event listener to the buttons, so that when clicked, the active class is added to the button that was clicked and removed from the other button
+        document.querySelector('#adults-button').addEventListener('click', () => {
+            document.querySelector('#adults-button').classList.add('active');
+            document.querySelector('#kids-button').classList.remove('active');
+            tableBody.innerHTML = '';
+            pb.collection('leaderboard_adults').getList(1, 10).then(resultList => {
+                resultList.items.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const rankCell = document.createElement('td');
+                    rankCell.textContent = index + 1;
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.id;
+                    const scoreCell = document.createElement('td');
+                    scoreCell.textContent = item.time_left;
+                    row.appendChild(rankCell);
+                    row.appendChild(nameCell);
+                    row.appendChild(scoreCell);
+                    tableBody.appendChild(row);
+                });
+            });
+        });
+        document.querySelector('#kids-button').addEventListener('click', () => {
+            document.querySelector('#kids-button').classList.add('active');
+            document.querySelector('#adults-button').classList.remove('active');
+            tableBody.innerHTML = '';
+            pb.collection('leaderboard_kids').getList(1, 10).then(resultList => {
+                resultList.items.forEach((item, index) => {
+                    const row = document.createElement('tr');
+                    const rankCell = document.createElement('td');
+                    rankCell.textContent = index + 1;
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = item.id;
+                    const scoreCell = document.createElement('td');
+                    scoreCell.textContent = item.time_left;
+                    row.appendChild(rankCell);
+                    row.appendChild(nameCell);
+                    row.appendChild(scoreCell);
+                    tableBody.appendChild(row);
+                });
+            });
+        });
+        // Add an event listener to the add score button, so that when clicked, the modal is shown
+        document.querySelector('#add-button').addEventListener('click', () => {
+            document.querySelector('#modal').style.display = 'block';
+        });
+
+        // The modal should close when the user clicks outside of it.
+        document.querySelector('#modal').addEventListener('click', (event) => {
+            if (event.target === document.querySelector('#modal')) {
+                document.querySelector('#modal').style.display = 'none';
+            }
+        });
+        // Add an event listener to the form, so that when submitted, the form data is sent to the PocketBase API.
+        document.querySelector('#add-score-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            // example create data
+            const data = {
+                "team_name": document.querySelector('#team-name').value,
+                "time_left": document.querySelector('#time-left').value,
+                "variant": document.querySelector('#team-type').value
+            };
+            const records = await pb.collection('scores').create(data);
+            document.querySelector('#modal').style.display = 'none';
+        });        
+	</script>
+</body>
+</html>
