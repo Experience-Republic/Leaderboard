@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/gh/pocketbase/js-sdk/dist/pocketbase.umd.js"></script>
 	<title>Leaderboard</title>
 	<style>
+        /* Add the Bahij font  */
+        @font-face {
+            font-family: 'Bahij';
+            src: url(assets/fonts/Bahij_TheSansArabic-Bold.woff2) format('woff2'),
+                url(assets/fonts/Bahij_TheSansArabic-Bold.woff) format('woff');
+        }
 		body {
-			background-color: #f0f8ff; /* Light blue background */
-			font-family: Arial, sans-serif;
+            font-family: 'Bahij';            
+            background-image:url("assets/background.jpg");
+            background-size:cover;
 		}
 		table {
+            /* Darkblue transparent background */
+            background-color: rgba(35, 57, 93, 0.3);
+            color:white;
 			margin: 20px auto;
 			border-collapse: collapse;
 			width: 50%;
-			background-color: #fff; /* White table background */
 			box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for table */
+            border-spacing: 0 30px;
 		}
+        tbody{
+            font-size:20px;
+        }
 		th, td {
 			text-align: left;
 			padding: 12px;
 		}
 		th {
+            font-size: 30px;
 			background-color: #23395d; /* Blue header background */
 			color: #fff; /* White header text */
 		}
 		tr:nth-child(even) {
-			background-color: #f2f2f2; /* Light gray background for even rows */
-		}
+            background-color: rgba(35, 57, 93, 0.8);
+		}		
 		tr:hover {
-			background-color: #ddd; /* Darker gray background on hover */
+			background-color: rgba(35, 57, 93, 0.5);
 		}
         .button-container {
 			display: flex;
@@ -41,8 +56,8 @@
             right: 20px;
         }
 		.button {
-            border-radius:5px;
-			background-color: #0074D9;
+            border-radius:5px;            
+			background-color: #004b8c;
 			color: white;
 			font-size: 16px;
 			padding: 10px 20px;
@@ -50,8 +65,8 @@
 			cursor: pointer;
 			margin-right: 10px;
 		}
-		.active {
-			background-color: #004b8c;
+		.active {            
+			background-color: #0074D9;
 		}
         .modal {
     display: none;
@@ -109,35 +124,35 @@
 </head>
 <body>
     <div class="button-container">
-		<button class="button active" id="adults-button">Adults</button>
-		<button class="button" id="kids-button">Kids</button>
+		<button class="button active" id="adults-button">الكبار</button>
+		<button class="button" id="kids-button">أطفال</button>
 	</div>
     <!-- A simple button on the right that triggers a modal -->
     <div class="add-container">
-        <button class="button" id="add-button">+ Add score</button>
+        <button class="button" id="add-button">+ أضف النتيجة</button>
     </div>
     <!-- A small form that is hidden until the add score button is pressed. It contains three fields, A team name text field, a remaining time field up to 600 seconds, and a select which has the options kids and adults. -->
     <div class="modal" id="modal">
         <form id="add-score-form">
-            <label for="team-name">Team name</label>
+            <label for="team-name">اسم الفريق</label>
             <input type="text" id="team-name" name="team-name" required>
-            <label for="time-left">Time left</label>
+            <label for="time-left">الوقت</label>
             <input type="number" id="time-left" name="time-left" min="0" max="600" required>
-            <label for="team-type">Route taken</label>
+            <label for="team-type">مَسَار</label>
             <select id="team-type" name="team-type" required>
-                <option value="adult">Adults</option>
-                <option value="kid">Kids</option>
+                <option value="adult">الكبار</option>
+                <option value="kid">أطفال</option>
             </select>
-            <input type="submit" value="Submit">
+            <input type="submit" value="أرسل">
         </form>
     </div>
 
 	<table id="leaderboard">
 		<thead>
 			<tr>
-				<th>Rank</th>
-				<th>Name</th>
-				<th>Remaining Time</th>
+				<th>تصنيف</th>
+				<th>اسم الفريق</th>
+				<th>الوقت</th>
 			</tr>
 		</thead>
 		<tbody>
