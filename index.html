@@ -136,8 +136,10 @@
         <form id="add-score-form">
             <label for="team-name">اسم الفريق</label>
             <input type="text" id="team-name" name="team-name" required>
-            <label for="time-left">الوقت</label>
-            <input type="number" id="time-left" name="time-left" min="0" max="600" required>
+            <label for="minutes left">دقائق</label>
+            <input type="number" id="minutes-left" name="minutes left" min="0" max="9" required>
+            <label for="seconds left">ثواني</label>
+            <input type="number" id="seconds-left" name="seconds left" min="0" max="59" required>
             <label for="team-type">مَسَار</label>
             <select id="team-type" name="team-type" required>
                 <option value="adult">الكبار</option>
@@ -234,11 +236,21 @@
             // example create data
             const data = {
                 "team_name": document.querySelector('#team-name').value,
-                "time_left": document.querySelector('#time-left').value,
+                // Convert the value of the minutes and seconds fields to seconds, convert them to integers and add them together.
+                "time_left": parseInt(document.querySelector('#minutes-left').value) * 60 + parseInt(document.querySelector('#seconds-left').value),
                 "variant": document.querySelector('#team-type').value
             };
-            const records = await pb.collection('scores').create(data);
-            document.querySelector('#modal').style.display = 'none';
+            try{
+                console.log(data);
+                const records = await pb.collection('scores').create(data);
+                // Hide modal
+                document.querySelector('#modal').style.display = 'none';
+            } catch (error) {
+                console.log(error);
+                // Show an alert.
+                alert('حدث خطأ ما. الرجاء المحاولة مرة أخرى.');                
+            }
+
         });        
 	</script>
 </body>
