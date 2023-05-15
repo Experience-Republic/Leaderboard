@@ -1,0 +1,149 @@
+/* Add the Bahij font  */
+@font-face {
+    font-family: 'Bahij';
+    src: url(assets/fonts/Bahij_TheSansArabic-Bold.woff2) format('woff2'),
+        url(assets/fonts/Bahij_TheSansArabic-Bold.woff) format('woff');
+}
+body {
+    /* Background is a gradient from #92549d on top to #225ca5 on the bottom */
+    background: linear-gradient(to bottom, #92549d, #2c3171 50%, #225ca5);
+    height:100vh;
+    font-family: 'Bahij', Arial, Helvetica, sans-serif;
+}
+/* A transparent button with white characters, and a thick white border, with slightly rounded edges. */
+button{
+    color:white;
+    font-family: 'Bahij', Arial, Helvetica, sans-serif;
+    background-color: transparent;
+    border: 0.3rem solid white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    margin: 1rem;
+    cursor:pointer;
+  }
+  
+  /* Add a nice hover effect on the button. */
+/* button:hover{
+    background-color: white;
+    color: #2c3171;
+  } */
+img#upper_left{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+    width: 15vw;
+}
+img#upper_right{
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    width: 25vw;
+}
+  
+table {
+    /* Darkblue transparent background */
+    background-color: rgba(35, 57, 93, 0.3);
+    color:white;
+    margin: 20px auto;
+    border-collapse: collapse;
+    width: 75%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for table */
+    border-spacing: 0 30px;
+}
+tbody{
+    font-size:20px;
+}
+th, td {
+    text-align: left;
+    padding: 12px;
+}
+th {
+    font-size: 30px;
+    background-color: #23395d; /* Blue header background */
+    color: #fff; /* White header text */
+}
+tr:nth-child(even) {
+    background-color: rgba(35, 57, 93, 0.8);
+}	
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+}
+.add-container {
+    /* Display on top right */
+    position: absolute;
+    margin-top: 15%;
+    top:0px;
+    right: 20px;
+}
+/* .button {
+    font-family: 'Bahij';
+    border-radius:5px;            
+    background-color: #004b8c;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+} */
+.active {            
+    background-color: white;
+    color: #004b8c;
+}
+.modal {
+    font-family: 'Bahij';
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.modal form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.modal form input,
+.modal form select {
+    font-family: 'Bahij';
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.modal form input[type="submit"] {
+    background-color: #0074D9;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modal form input[type="submit"]:hover {
+    background-color: #005ea3;
+}
