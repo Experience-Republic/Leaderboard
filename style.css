@@ -42,10 +42,10 @@ img#upper_right{
 }
   
 table {
-    /* Darkblue transparent background */
+    /* Center table vertically. */
     background-color: rgba(35, 57, 93, 0.3);
     color:white;
-    margin: 20px auto;
+    margin: 10% auto;
     border-collapse: collapse;
     width: 75%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for table */
