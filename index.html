@@ -10,8 +10,8 @@
     <img id="upper_left" src="assets/background/upper_left.png">
     <img id="upper_right" src="assets/background/upper_right.png">
     <div class="button-container">
-		<button class="button active" id="adults-button">الكبار</button>
-		<button class="button" id="kids-button">أطفال</button>
+		<button class="button active" id="adults-button">البالغين</button>
+		<button class="button" id="kids-button">الأطفال</button>
 	</div>
     <!-- A simple button on the right that triggers a modal -->
     <div class="add-container">
@@ -26,10 +26,10 @@
             <input type="number" id="minutes-left" name="minutes left" min="0" max="9" required>
             <label for="seconds left">ثواني</label>
             <input type="number" id="seconds-left" name="seconds left" min="0" max="59" required>
-            <label for="team-type">مَسَار</label>
+            <label for="team-type">المسار المُتبع</label>
             <select id="team-type" name="team-type" required>
-                <option value="adult">الكبار</option>
-                <option value="kid">أطفال</option>
+                <option value="adult">البالغين</option>
+                <option value="kid">الأطفال</option>
             </select>
             <input type="submit" value="أرسل">
         </form>
@@ -38,9 +38,9 @@
 	<table id="leaderboard">
 		<thead>
 			<tr>
-				<th>تصنيف</th>
+				<th>الترتيب</th>
 				<th>اسم الفريق</th>
-				<th>الوقت</th>
+				<th>الوقت المتبقي</th>
 			</tr>
 		</thead>
 		<tbody>
