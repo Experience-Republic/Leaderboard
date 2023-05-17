@@ -76,6 +76,13 @@ tr:nth-child(even) {
     position: absolute;
     margin-top: 15%;
     top:0px;
+    left: 20px;
+}
+.delete-container {
+    /* Display on top right */
+    position: absolute;
+    margin-top: 15%;
+    top:0px;
     right: 20px;
     /* Display the buttons on top of each other */
     display: flex;
