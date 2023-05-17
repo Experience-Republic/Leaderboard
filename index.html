@@ -16,6 +16,8 @@
     <!-- A simple button on the right that triggers a modal -->
     <div class="add-container">
         <button class="button" id="add-button">+ أضف النتيجة</button>
+        <button class="button" id="reset-adult-button">حذف نتائج البالغين</button>
+        <button class="button" id="reset-kid-button">حذف نتائج الأطفال</button>
     </div>
     <!-- A small form that is hidden until the add score button is pressed. It contains three fields, A team name text field, a remaining time field up to 600 seconds, and a select which has the options kids and adults. -->
     <div class="modal" id="modal">
@@ -137,7 +139,52 @@
                 alert('حدث خطأ ما. الرجاء المحاولة مرة أخرى.');                
             }
 
-        });        
+        });
+        // When the button with id reset-adult-button is clicked, ask for a confirmation in an alert, then send a request to the PocketBase API to delete all records in the leaderboard_adults collection.
+        document.querySelector('#reset-adult-button').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to delete all adult scores?')){
+                try{
+                    const records = await pb.collection('scores').getFullList({
+                        filter: 'variant = "adult"',
+                    });
+                    // Loop through the records and delete them one by one.
+                    records.forEach(async (record) => {
+                        await pb.collection('scores').delete(record.id);
+                    });
+                    // Show an alert.
+                    alert('All adult scores have been deleted');
+                    // Refresh the page.
+                    location.reload();
+                } catch (error) {
+                    console.log(error);
+                    // Show an alert.
+                    alert('Something went wrong');                
+                }
+            }
+        });
+        // When the button with id reset-kid-button is clicked, ask for a confirmation in an alert, then send a request to the PocketBase API to delete all records in the leaderboard_kids collection.
+        document.querySelector('#reset-kid-button').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to delete all kid scores?')){
+                try{
+                    const records = await pb.collection('scores').getFullList({
+                        filter: 'variant = "kid"',
+                    });
+                    // Loop through the records and delete them one by one.
+                    records.forEach(async (record) => {
+                        await pb.collection('scores').delete(record.id);
+                    });
+                    // Show an alert.
+                    alert('All kid scores have been deleted');
+                    // Refresh the page.
+                    location.reload();
+                } catch (error) {
+                    console.log(error);
+                    // Show an alert.
+                    alert('Something went wrong');                
+                }
+            }
+        });
+
 	</script>
 </body>
 </html>
