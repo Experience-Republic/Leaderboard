@@ -78,6 +78,8 @@ tr:nth-child(even) {
     top:0px;
     right: 20px;
     /* Display the buttons on top of each other */
+    display: flex;
+    flex-direction: column;
 }
 /* .button {
     font-family: 'Bahij';
