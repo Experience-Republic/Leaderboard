@@ -45,7 +45,7 @@ table {
     /* Center table vertically. */
     background-color: rgba(35, 57, 93, 0.3);
     color:white;
-    margin: 10% auto;
+    margin: 15% auto;
     border-collapse: collapse;
     width: 75%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Box shadow for table */
@@ -76,7 +76,7 @@ tr:nth-child(even) {
     position: absolute;
     margin-top: 15%;
     top:0px;
-    left: 20px;
+    left: 5%;
 }
 .delete-container {
     /* Display on top right */
