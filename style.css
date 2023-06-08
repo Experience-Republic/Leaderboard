@@ -9,6 +9,8 @@ body {
     background: linear-gradient(to bottom, #92549d, #2c3171 50%, #225ca5);
     height:100vh;
     font-family: 'Bahij', Arial, Helvetica, sans-serif;
+    /* Prevent scrollbar */
+    overflow: hidden;
 }
 /* A transparent button with white characters, and a thick white border, with slightly rounded edges. */
 button{

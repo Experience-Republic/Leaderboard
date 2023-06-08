@@ -50,6 +50,16 @@
 		<tbody>
 		</tbody>
 	</table>
+    <script>
+        var password = "Escape_Room@123";
+        (function passcodeprotect() {
+        var passcode = prompt("Enter PassCode");
+        while (passcode !== password) {
+            alert("Incorrect PassCode");
+            return passcodeprotect();
+        }
+        }());
+    </script>
 	<script type="module">
 		const pb = new PocketBase('https://leaderboard-pse.pockethost.io');
 		const tableBody = document.querySelector('#leaderboard tbody');
